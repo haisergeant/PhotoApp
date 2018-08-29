@@ -11,6 +11,7 @@ import EasyPeasy
 import RxSwift
 import RxCocoa
 import NSObject_Rx
+import Photos
 
 class PhotosViewController: BaseViewController {
     let collectionView: UICollectionView = {
@@ -53,9 +54,58 @@ class PhotosViewController: BaseViewController {
     override func configureActions() {
         super.configureActions()
         addButton.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: { _ in
+            let actionSheet = UIAlertController(title: "Add photo", message: "From", preferredStyle: .actionSheet)
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                actionSheet.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (action) in
+                    self.addPhoto(from: .camera)
+                }))
+            }            
             
+            actionSheet.addAction(UIAlertAction(title: "From library", style: .default, handler: { (action) in
+                let photos = PHPhotoLibrary.authorizationStatus()
+                if photos != .authorized {
+                    PHPhotoLibrary.requestAuthorization({status in
+                        if status == .authorized{
+                            self.addPhoto(from: .photoLibrary)
+                        }
+                    })
+                } else {
+                    self.addPhoto(from: .photoLibrary)
+                }
+            }))
+            
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(actionSheet, animated: true, completion: nil)
         }).disposed(by: rx.disposeBag)
     }
+    
+    private func addPhoto(from source: UIImagePickerControllerSourceType) {
+        let controller = UIImagePickerController()
+        controller.sourceType = source
+        controller.allowsEditing = false
+        controller.delegate = self
+        self.present(controller, animated: true, completion: nil)
+    }
+}
+
+extension PhotosViewController: UIImagePickerControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            print("select image: \(image.size)")
+        }
+    }
+}
+
+extension PhotosViewController: UINavigationControllerDelegate {
+    
 }
 
 extension PhotosViewController: UICollectionViewDataSource {
