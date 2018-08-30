@@ -14,6 +14,8 @@ import NSObject_Rx
 import Photos
 
 class PhotosViewController: BaseViewController {
+    
+    // UI components
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -23,6 +25,9 @@ class PhotosViewController: BaseViewController {
     }()
     
     let addButton = UIButton()
+    
+    // View Model
+    let viewModel = PhotosViewModel()
     
     override func configureSubviews() {
         super.configureSubviews()
@@ -56,10 +61,20 @@ class PhotosViewController: BaseViewController {
         addButton.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: { _ in
             let actionSheet = UIAlertController(title: "Add photo", message: "From", preferredStyle: .actionSheet)
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                actionSheet.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (action) in
-                    self.addPhoto(from: .camera)
-                }))
-            }            
+                let cameraMediaType = AVMediaType.video
+                let status = AVCaptureDevice.authorizationStatus(for: cameraMediaType)
+                if status != .authorized {
+                    AVCaptureDevice.requestAccess(for: cameraMediaType, completionHandler: { (granted) in
+                        if granted {
+                            actionSheet.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (action) in
+                                self.addPhoto(from: .camera)
+                            }))
+                        } else {
+                            // TODO: show alert to let user change in Settings
+                        }
+                    })
+                }
+            }
             
             actionSheet.addAction(UIAlertAction(title: "From library", style: .default, handler: { (action) in
                 let photos = PHPhotoLibrary.authorizationStatus()
@@ -67,6 +82,8 @@ class PhotosViewController: BaseViewController {
                     PHPhotoLibrary.requestAuthorization({status in
                         if status == .authorized{
                             self.addPhoto(from: .photoLibrary)
+                        } else {
+                            // TODO: show alert to let user change in Settings
                         }
                     })
                 } else {
@@ -99,7 +116,8 @@ extension PhotosViewController: UIImagePickerControllerDelegate {
         picker.dismiss(animated: true, completion: nil)
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            print("select image: \(image.size)")
+            let fileName = String(Date().ticks) + ".png"
+            self.viewModel.save(image: image, name: fileName)
         }
     }
 }

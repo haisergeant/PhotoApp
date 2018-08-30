@@ -10,6 +10,6 @@ import UIKit
 
 struct PhotosViewModel {
     func save(image: UIImage, name: String) {
-        DataManager.shared.save(image: image, name: name)
+        DataManager.shared.save(image: image, name: name)        
     }
 }
