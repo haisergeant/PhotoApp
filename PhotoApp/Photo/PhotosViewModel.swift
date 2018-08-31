@@ -15,15 +15,23 @@ class PhotosViewModel {
     
     func save(image: UIImage, name: String) {
         DispatchQueue.global(qos: .background).async {
-            PhotoManager.shared.save(image: image, folder: "Photos", name: name) { [weak self] in
-                guard let images = self?.loadImage() else { return }
-                self?.imageModels.onNext(images)
+            guard let scaledImage = image.resized(to: 80) else { return }
+            PhotoManager.shared.save(image: scaledImage, folder: "Thumbnails", name: name) {
+                DispatchQueue.main.async { [weak self] in
+                    guard let images = self?.loadImages() else { return }
+                    self?.imageModels.onNext(images)
+                }
             }
+            PhotoManager.shared.save(image: image, folder: "Photos", name: name)
         }        
     }
     
-    func loadImage() -> [ImageViewModel] {
-        let urls = PhotoManager.shared.retrievePhoto(folder: "Photos")
+    func retrieveImages() {
+        self.imageModels.onNext(self.loadImages())
+    }
+    
+    private func loadImages() -> [ImageViewModel] {
+        let urls = PhotoManager.shared.retrievePhoto(folder: "Thumbnails")
         let result = urls.map { ImageViewModel(url: $0) }
         return result
     }

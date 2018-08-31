@@ -65,7 +65,7 @@ class PhotosViewController: BaseViewController {
             self.list = models
         }).disposed(by: rx.disposeBag)
         
-        viewModel.loadImage()
+        viewModel.retrieveImages()
     }
     
     override func configureActions() {

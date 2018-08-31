@@ -29,8 +29,15 @@ class ImageCollectionViewCell: BaseCollectionViewCell {
     override func configureLayout() {
         super.configureLayout()
         self.imageView.easy.layout(
-            Edges()
+            Edges(4)
         )
+    }
+    
+    override func configureStyle() {
+        imageView.layer.borderWidth = 1
+        imageView.layer.cornerRadius = 4
+        imageView.layer.borderColor = UIColor.clear.cgColor
+        imageView.layer.masksToBounds = true
     }
     
     func configure(with model: ImageViewModel) {
