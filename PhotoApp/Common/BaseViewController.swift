@@ -23,7 +23,7 @@ class BaseViewController: UIViewController {
     func initialize() { }
     func navigationTitle() -> String { return "" }
     func backgroundColor() -> UIColor { return .white }
-    func shouldShowNavigationBar() -> Bool { return false }
+    func shouldHideNavigationBar() -> Bool { return true }
     func configureSubviews() { }
     func configureLayout() { }
     func configureContent() { }
@@ -43,6 +43,6 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(shouldShowNavigationBar(), animated: false)
+        self.navigationController?.setNavigationBarHidden(shouldHideNavigationBar(), animated: false)
     }
 }

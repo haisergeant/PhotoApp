@@ -19,7 +19,8 @@ class PhotosViewController: BaseViewController {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.estimatedItemSize = CGSize(width: 80, height: 80)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }()
@@ -28,6 +29,11 @@ class PhotosViewController: BaseViewController {
     
     // View Model
     let viewModel = PhotosViewModel()
+    var list = [ImageViewModel]() {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     
     override func configureSubviews() {
         super.configureSubviews()
@@ -50,10 +56,16 @@ class PhotosViewController: BaseViewController {
     
     override func configureContent() {
         super.configureContent()
+        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCollectionViewCell")
         collectionView.delegate = self
         collectionView.dataSource = self
         
         addButton.setTitle("Take photo", for: .normal)
+        viewModel.imageModels.subscribe(onNext: { models in
+            self.list = models
+        }).disposed(by: rx.disposeBag)
+        
+        viewModel.loadImage()
     }
     
     override func configureActions() {
@@ -73,6 +85,8 @@ class PhotosViewController: BaseViewController {
                             // TODO: show alert to let user change in Settings
                         }
                     })
+                } else {
+                    self.addPhoto(from: .camera)
                 }
             }
             
@@ -128,13 +142,29 @@ extension PhotosViewController: UINavigationControllerDelegate {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as? ImageCollectionViewCell {
+            cell.configure(with: list[indexPath.row])
+            return cell
+        }
         return UICollectionViewCell()
     }
         
+}
+
+extension PhotosViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = self.view.frame.size.width
+        let cellWidth = width / 4.0
+        return CGSize(width: cellWidth, height: cellWidth)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 160, right: 0)
+    }
 }
 
 extension PhotosViewController: UICollectionViewDelegate {
