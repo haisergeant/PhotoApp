@@ -10,6 +10,8 @@ import UIKit
 import EasyPeasy
 
 struct ImageViewModel {
+    let name: String
+    let thumbnailUrl: URL
     let url: URL
 }
 
@@ -34,22 +36,15 @@ class ImageCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureStyle() {
+        super.configureStyle()
         imageView.layer.borderWidth = 1
         imageView.layer.cornerRadius = 4
         imageView.layer.borderColor = UIColor.clear.cgColor
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
     }
     
     func configure(with model: ImageViewModel) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-                let data = try Data(contentsOf: model.url)
-                DispatchQueue.main.async { [weak self] in
-                    self?.imageView.image = UIImage(data: data)
-                }
-            } catch {
-                print(error)
-            }
-        }
+        self.imageView.image(for: model.thumbnailUrl)        
     }
 }

@@ -169,7 +169,9 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotosViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let model = self.list[indexPath.row]
+        let controller = PhotoViewController(imageModel: model)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 
