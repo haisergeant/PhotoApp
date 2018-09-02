@@ -23,8 +23,8 @@ class PhotosViewModel {
                     self?.imageModels.onNext(images)
                 }
             }
-            PhotoManager.shared.save(image: image, folder: "Photos", name: name) { filePath in
-                dataManager.addRecord(image: image, filePath: filePath)
+            PhotoManager.shared.save(image: image, folder: "Photos", name: name) { [weak self] filePath in
+                self?.dataManager.addRecord(image: image, filePath: filePath)
             }
         }        
     }
