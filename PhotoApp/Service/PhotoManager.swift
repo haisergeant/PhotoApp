@@ -23,7 +23,6 @@ class PhotoManager {
     func retrievePhoto(folder: String) -> [URL] {
         do {
             let folderName = self.documentPath().appendingPathComponent(folder)
-            
             let list = try FileManager.default.contentsOfDirectory(at: folderName,
                                                                    includingPropertiesForKeys: [URLResourceKey.nameKey, URLResourceKey.contentModificationDateKey],
                                                                    options: .skipsHiddenFiles)
@@ -35,7 +34,7 @@ class PhotoManager {
                         let secondDate = try second.resourceValues(forKeys: [URLResourceKey.nameKey]).name else { return false }
                     return firstDate < secondDate
             }
-            return filterList
+            return filterList            
         } catch {
             print(error)
             return [URL]()
@@ -51,7 +50,7 @@ class PhotoManager {
                       fileName: String,
                       completion: ((String) -> Void)? = nil) {
         do {
-            let folderName = documentPath().appendingPathComponent(folder)
+            let folderName = self.documentPath().appendingPathComponent(folder)
             try FileManager.default.createDirectory(at: folderName,
                                                 withIntermediateDirectories: true,
                                                 attributes: nil)

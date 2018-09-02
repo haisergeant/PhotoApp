@@ -28,10 +28,10 @@ class DataManager {
     func addRecord(image: UIImage, filePath: String) {
         guard let data = UIImageJPEGRepresentation(image, 1.0) else { return }
         self.savingList.append(filePath)
+        
         let fileName = URL(fileURLWithPath: filePath).lastPathComponent
-        let operation = UploadOperation(data: data, fileName: fileName)
-        operation.completionBlock = {
-            self.savingList = self.savingList.filter { $0 == filePath }
+        let operation = UploadOperation(data: data, fileName: fileName) { (success) in
+            self.savingList = self.savingList.filter { $0 != filePath }
         }
         self.operationQueue.addOperation(operation)
     }
@@ -67,22 +67,30 @@ class DataManager {
 class UploadOperation: Operation {
     let data: Data
     let fileName: String
+    var completion: ((Bool) -> Void)?
     
+    let sema = DispatchSemaphore(value: 0)
     let repository = ServerRepository.shared
     let disposeBag = DisposeBag()
     
-    init(data: Data, fileName: String) {
+    init(data: Data, fileName: String, completion: ((Bool) -> Void)? = nil) {
         self.data = data
         self.fileName = fileName
+        self.completion = completion
     }
     
     override func main() {
         self.repository.uploadData(data: data, fileName: fileName)
-            .subscribe(onNext: { (success) in
+            .subscribe(onNext: { [weak self] (success) in
                 // Upload success, remove record
+                guard let `self` = self else { return }
+                self.completion?(success)
+                self.sema.signal()
             }, onError: { (error) in
                 // Upload fail, try again later
+                self.sema.signal()
             }).disposed(by: disposeBag)
+        sema.wait()
     }
 }
 
