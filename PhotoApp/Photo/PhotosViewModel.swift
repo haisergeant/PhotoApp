@@ -12,17 +12,20 @@ import RxSwift
 
 class PhotosViewModel {
     var imageModels = BehaviorSubject<[ImageViewModel]>(value: [ImageViewModel]())
+    let dataManager = DataManager.shared
     
     func save(image: UIImage, name: String) {
         DispatchQueue.global(qos: .background).async {
             guard let scaledImage = image.resized(to: 120) else { return }
-            PhotoManager.shared.save(image: scaledImage, folder: "Thumbnails", name: name) {
+            PhotoManager.shared.save(image: scaledImage, folder: "Thumbnails", name: name) { value in
                 DispatchQueue.main.async { [weak self] in
                     guard let images = self?.loadImages() else { return }
                     self?.imageModels.onNext(images)
                 }
             }
-            PhotoManager.shared.save(image: image, folder: "Photos", name: name)
+            PhotoManager.shared.save(image: image, folder: "Photos", name: name) { filePath in
+                dataManager.addRecord(image: image, filePath: filePath)
+            }
         }        
     }
     

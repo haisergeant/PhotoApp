@@ -20,12 +20,12 @@ class ImageCollectionViewCell: BaseCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.image = nil
+        self.imageView.image = nil
     }
     
     override func configureSubviews() {
         super.configureSubviews()
-        self.contentView.addSubview(imageView)
+        self.contentView.addSubview(self.imageView)
     }
     
     override func configureLayout() {
@@ -37,11 +37,11 @@ class ImageCollectionViewCell: BaseCollectionViewCell {
     
     override func configureStyle() {
         super.configureStyle()
-        imageView.layer.borderWidth = 1
-        imageView.layer.cornerRadius = 4
-        imageView.layer.borderColor = UIColor.clear.cgColor
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        self.imageView.layer.borderWidth = 1
+        self.imageView.layer.cornerRadius = 4
+        self.imageView.layer.borderColor = UIColor.clear.cgColor
+        self.imageView.layer.masksToBounds = true
+        self.imageView.contentMode = .scaleAspectFill
     }
     
     func configure(with model: ImageViewModel) {

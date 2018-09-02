@@ -13,6 +13,9 @@
 		E83D6CCA21392ADB00FAA264 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83D6CC921392ADB00FAA264 /* UIImageExtension.swift */; };
 		E83D6CCC2139C37B00FAA264 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83D6CCB2139C37B00FAA264 /* PhotoViewController.swift */; };
 		E83D6CCE2139CA6600FAA264 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83D6CCD2139CA6600FAA264 /* UIImageViewExtension.swift */; };
+		E83D6CD0213B5FBE00FAA264 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83D6CCF213B5FBE00FAA264 /* Repository.swift */; };
+		E83D6CD2213B606800FAA264 /* ServerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83D6CD1213B606800FAA264 /* ServerRepository.swift */; };
+		E83D6CD4213B702200FAA264 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83D6CD3213B702200FAA264 /* DataManager.swift */; };
 		E89CEF3F2136C37C00072337 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89CEF3E2136C37C00072337 /* AppDelegate.swift */; };
 		E89CEF462136C37E00072337 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E89CEF452136C37E00072337 /* Assets.xcassets */; };
 		E89CEF492136C37E00072337 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E89CEF472136C37E00072337 /* LaunchScreen.storyboard */; };
@@ -56,6 +59,9 @@
 		E83D6CC921392ADB00FAA264 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		E83D6CCB2139C37B00FAA264 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		E83D6CCD2139CA6600FAA264 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
+		E83D6CCF213B5FBE00FAA264 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		E83D6CD1213B606800FAA264 /* ServerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerRepository.swift; sourceTree = "<group>"; };
+		E83D6CD3213B702200FAA264 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		E89CEF3B2136C37C00072337 /* PhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E89CEF3E2136C37C00072337 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E89CEF452136C37E00072337 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -207,6 +213,9 @@
 			isa = PBXGroup;
 			children = (
 				E8AA568F21373ADC00ECF0EF /* PhotoManager.swift */,
+				E83D6CD3213B702200FAA264 /* DataManager.swift */,
+				E83D6CCF213B5FBE00FAA264 /* Repository.swift */,
+				E83D6CD1213B606800FAA264 /* ServerRepository.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -447,14 +456,17 @@
 				E89CEF712136CD0200072337 /* PhotosViewController.swift in Sources */,
 				E83D6CC82138E66C00FAA264 /* BaseCollectionViewCell.swift in Sources */,
 				E8AA56932138261C00ECF0EF /* DateExtension.swift in Sources */,
+				E83D6CD4213B702200FAA264 /* DataManager.swift in Sources */,
 				E8AA569021373ADC00ECF0EF /* PhotoManager.swift in Sources */,
 				E8AA56B021383D6D00ECF0EF /* ImageCollectionViewCell.swift in Sources */,
 				E83D6CCA21392ADB00FAA264 /* UIImageExtension.swift in Sources */,
 				E83D6CCE2139CA6600FAA264 /* UIImageViewExtension.swift in Sources */,
+				E83D6CD2213B606800FAA264 /* ServerRepository.swift in Sources */,
 				E8AA568E21373A0200ECF0EF /* PhotosViewModel.swift in Sources */,
 				E89CEF3F2136C37C00072337 /* AppDelegate.swift in Sources */,
 				E89CEF6E2136C91400072337 /* BaseViewController.swift in Sources */,
 				E83D6CCC2139C37B00FAA264 /* PhotoViewController.swift in Sources */,
+				E83D6CD0213B5FBE00FAA264 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
