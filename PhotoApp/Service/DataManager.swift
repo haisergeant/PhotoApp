@@ -18,6 +18,9 @@ class DataManager {
     init() {
         self.readFromFile(fileName: "data.txt") { (result) in
             self.savingList.append(contentsOf: result)
+            Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { [weak self] (timer) in
+                self?.configureUploadOperation()
+            })
         }
     }
     
@@ -25,8 +28,7 @@ class DataManager {
         self.writeToFile(text: savingList.joined(separator: "\n"), fileName: "data.txt")
     }
     
-    func addRecord(image: UIImage, filePath: String) {
-        guard let data = UIImageJPEGRepresentation(image, 1.0) else { return }
+    func addRecord(data: Data, filePath: String) {
         self.savingList.append(filePath)
         
         let fileName = URL(fileURLWithPath: filePath).lastPathComponent
@@ -34,6 +36,21 @@ class DataManager {
             self.savingList = self.savingList.filter { $0 != filePath }
         }
         self.operationQueue.addOperation(operation)
+    }
+    
+    private func configureUploadOperation() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.savingList.forEach { (filePath) in
+                guard let url = URL(string: filePath) else { return }
+                do {
+                    let data = try Data(contentsOf: url)
+                    self?.addRecord(data: data, filePath: filePath)
+                } catch {
+                    print(error)
+                }
+                
+            }
+        }
     }
     
     private func documentPath() -> URL {

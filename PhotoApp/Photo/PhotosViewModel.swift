@@ -24,7 +24,8 @@ class PhotosViewModel {
                 }
             }
             PhotoManager.shared.save(image: image, folder: "Photos", name: name) { [weak self] filePath in
-                self?.dataManager.addRecord(image: image, filePath: filePath)
+                guard let data = UIImageJPEGRepresentation(image, 1.0) else { return }
+                self?.dataManager.addRecord(data: data, filePath: filePath)
             }
         }        
     }

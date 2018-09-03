@@ -73,31 +73,31 @@ class PhotosViewController: BaseViewController {
         addButton.rx.controlEvent(.primaryActionTriggered).subscribe(onNext: { _ in
             let actionSheet = UIAlertController(title: "Add photo", message: "From", preferredStyle: .actionSheet)
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                let cameraMediaType = AVMediaType.video
-                let status = AVCaptureDevice.authorizationStatus(for: cameraMediaType)
-                if status != .authorized {
-                    AVCaptureDevice.requestAccess(for: cameraMediaType, completionHandler: { (granted) in
-                        if granted {
-                            actionSheet.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (action) in
+                actionSheet.addAction(UIAlertAction(title: "From Camera", style: .default, handler: { (action) in
+                    let cameraMediaType = AVMediaType.video
+                    let status = AVCaptureDevice.authorizationStatus(for: cameraMediaType)
+                    if status != .authorized {
+                        AVCaptureDevice.requestAccess(for: cameraMediaType, completionHandler: { (granted) in
+                            if granted {
                                 self.addPhoto(from: .camera)
-                            }))
-                        } else {
-                            // TODO: show alert to let user change in Settings
-                        }
-                    })
-                } else {
-                    self.addPhoto(from: .camera)
-                }
+                            } else {
+                                self.showErrorMessage(title: "Error", message: "Please allow access to Camera in Device Settings")
+                            }
+                        })
+                    } else {
+                        self.addPhoto(from: .camera)
+                    }
+                }))
             }
             
             actionSheet.addAction(UIAlertAction(title: "From library", style: .default, handler: { (action) in
-                let photos = PHPhotoLibrary.authorizationStatus()
-                if photos != .authorized {
+                let status = PHPhotoLibrary.authorizationStatus()
+                if status != .authorized {
                     PHPhotoLibrary.requestAuthorization({status in
-                        if status == .authorized{
+                        if status == .authorized {
                             self.addPhoto(from: .photoLibrary)
                         } else {
-                            // TODO: show alert to let user change in Settings
+                            self.showErrorMessage(title: "Error", message: "Please allow access to Photos in Device Settings")
                         }
                     })
                 } else {
@@ -119,6 +119,7 @@ class PhotosViewController: BaseViewController {
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
     }
+        
 }
 
 extension PhotosViewController: UIImagePickerControllerDelegate {

@@ -45,4 +45,12 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(shouldHideNavigationBar(), animated: false)
     }
+    
+    func showErrorMessage(title: String, message: String, completion: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default) { (action) in
+            completion?()
+        })
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
