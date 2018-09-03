@@ -31,7 +31,7 @@ class PhotosViewController: BaseViewController {
     let viewModel = PhotosViewModel()
     var list = [ImageViewModel]() {
         didSet {
-            self.collectionView.reloadData()
+            self.collectionView.update(from: oldValue, to: list, section: 0, completion: nil)
         }
     }
     

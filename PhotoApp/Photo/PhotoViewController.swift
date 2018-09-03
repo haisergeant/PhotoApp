@@ -11,7 +11,6 @@ import EasyPeasy
 
 class PhotoViewController: BaseViewController {
     let scrollView = UIScrollView()
-    let contentView = UIView()
     let imageView = UIImageView()
     let imageModel: ImageViewModel
     init(imageModel: ImageViewModel) {
@@ -25,24 +24,32 @@ class PhotoViewController: BaseViewController {
     
     override func configureSubviews() {
         super.configureSubviews()
-        self.view.addSubview(scrollView)
-        self.scrollView.addSubview(contentView)
-        self.view.addSubview(imageView)
+        self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.imageView)
     }
     
     override func configureLayout() {
         super.configureLayout()
-        self.scrollView.easy.layout(Edges())
-        self.contentView.easy.layout(Edges(), Size())
-        self.imageView.easy.layout(Edges())
+        self.scrollView.easy.layout(
+            Top(),
+            Left(),
+            Bottom(),
+            Width().like(self.view)
+        )
+        self.imageView.easy.layout(
+            Edges(),
+            Width().like(self.view),
+            Height().like(self.scrollView)
+        )
     }
     
     override func configureStyle() {
         super.configureStyle()
         self.scrollView.minimumZoomScale = 1
         self.scrollView.maximumZoomScale = 3
+        self.scrollView.delegate = self
         
-        self.imageView.contentMode = .scaleAspectFill
+        self.imageView.contentMode = .scaleAspectFit
         self.imageView.clipsToBounds = true
     }
     
@@ -53,5 +60,11 @@ class PhotoViewController: BaseViewController {
     override func configureContent() {
         super.configureContent()
         imageView.image(for: imageModel.url)
+    }
+}
+
+extension PhotoViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageView
     }
 }

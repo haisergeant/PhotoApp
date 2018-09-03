@@ -27,6 +27,7 @@
 		E8AA569021373ADC00ECF0EF /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA568F21373ADC00ECF0EF /* PhotoManager.swift */; };
 		E8AA56932138261C00ECF0EF /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA56922138261C00ECF0EF /* DateExtension.swift */; };
 		E8AA56B021383D6D00ECF0EF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA56AF21383D6D00ECF0EF /* ImageCollectionViewCell.swift */; };
+		E8B1751E213D79760019BA10 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B1751D213D79760019BA10 /* UICollectionViewExtension.swift */; };
 		F18E33213D060ECA7E3C543C /* Pods_PhotoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D961DCE5DAB1D3EEDF974791 /* Pods_PhotoAppTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		E8AA568F21373ADC00ECF0EF /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		E8AA56922138261C00ECF0EF /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		E8AA56AF21383D6D00ECF0EF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		E8B1751D213D79760019BA10 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		F74CF48A9A75771E76DF4016 /* Pods-PhotoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoApp/Pods-PhotoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		FF427B55EE85E42DB8DA16C3 /* Pods-PhotoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoApp/Pods-PhotoApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -226,6 +228,7 @@
 				E8AA56922138261C00ECF0EF /* DateExtension.swift */,
 				E83D6CC921392ADB00FAA264 /* UIImageExtension.swift */,
 				E83D6CCD2139CA6600FAA264 /* UIImageViewExtension.swift */,
+				E8B1751D213D79760019BA10 /* UICollectionViewExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-PhotoApp/Pods-PhotoApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/EasyPeasy/EasyPeasy.framework",
 				"${BUILT_PRODUCTS_DIR}/NSObject+Rx/NSObject_Rx.framework",
+				"${BUILT_PRODUCTS_DIR}/PHDiff/PHDiff.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
@@ -402,6 +406,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyPeasy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NSObject_Rx.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PHDiff.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
@@ -457,6 +462,7 @@
 				E83D6CC82138E66C00FAA264 /* BaseCollectionViewCell.swift in Sources */,
 				E8AA56932138261C00ECF0EF /* DateExtension.swift in Sources */,
 				E83D6CD4213B702200FAA264 /* DataManager.swift in Sources */,
+				E8B1751E213D79760019BA10 /* UICollectionViewExtension.swift in Sources */,
 				E8AA569021373ADC00ECF0EF /* PhotoManager.swift in Sources */,
 				E8AA56B021383D6D00ECF0EF /* ImageCollectionViewCell.swift in Sources */,
 				E83D6CCA21392ADB00FAA264 /* UIImageExtension.swift in Sources */,

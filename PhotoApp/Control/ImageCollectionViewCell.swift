@@ -8,11 +8,16 @@
 
 import UIKit
 import EasyPeasy
+import PHDiff
 
-struct ImageViewModel {
+struct ImageViewModel: Diffable {
     let name: String
     let thumbnailUrl: URL
     let url: URL
+    
+    var diffIdentifier: String {
+        return name
+    }
 }
 
 class ImageCollectionViewCell: BaseCollectionViewCell {
