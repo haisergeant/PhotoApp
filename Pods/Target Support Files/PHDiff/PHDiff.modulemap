@@ -1,0 +1,6 @@
+framework module PHDiff {
+  umbrella header "PHDiff-umbrella.h"
+
+  export *
+  module * { export * }
+}
